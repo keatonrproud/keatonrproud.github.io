@@ -99,12 +99,11 @@ input, select, textarea {
 	}
 
 	body {
-		background-color: #935d8c;
-		background-image: url("images/overlay.png"), -moz-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-		background-image: url("images/overlay.png"), -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-		background-image: url("images/overlay.png"), -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-		background-image: url("images/overlay.png"), linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-	}
+		background-color: #e5631a;
+		background-image: url("images/overlay.png"), -moz-linear-gradient(70deg, #e5631a 15%, #1a9ce5 85%);
+		background-image: url("images/overlay.png"), -webkit-linear-gradient(70deg, #e5631a 15%, #1a9ce5 85%);
+		background-image: url("images/overlay.png"), linear-gradient(70deg, #e5631a 15%, #1a9ce5 85%);
+}
 
 		body.is-preload *, body.is-preload *:before, body.is-preload *:after {
 			-moz-animation: none !important;
@@ -178,7 +177,7 @@ input, select, textarea {
 	}
 
 	p {
-		margin: 0 0 2em 0;
+		margin: 0 0 0 0;
 	}
 
 		p.content {
@@ -2467,7 +2466,7 @@ input, select, textarea {
 
 		dl.alt dt {
 			display: block;
-			width: 3em;
+			width: 100%;
 			margin: 0;
 			clear: left;
 			float: left;
@@ -2637,7 +2636,7 @@ input, select, textarea {
 	}
 
 	header.major {
-		margin-bottom: 3em;
+		margin-bottom: 0;
 	}
 
 		header.major h2 {
@@ -3094,10 +3093,10 @@ input, select, textarea {
 			}
 
 			#header.alt > * {
-				-moz-transition: opacity 3s ease;
-				-webkit-transition: opacity 3s ease;
-				-ms-transition: opacity 3s ease;
-				transition: opacity 3s ease;
+				-moz-transition: opacity 2s ease;
+				-webkit-transition: opacity 2s ease;
+				-ms-transition: opacity 2s ease;
+				transition: opacity 2s ease;
 				-moz-transition-delay: 0.5s;
 				-webkit-transition-delay: 0.5s;
 				-ms-transition-delay: 0.5s;
@@ -3692,17 +3691,17 @@ input, select, textarea {
 		flex-wrap: wrap;
 		padding: 5em 5em 3em 5em ;
 		width: calc(100% + 2em);
-		margin: 0 0 3em -2em;
+		margin: 0 0 0 0;
 	}
 
 		#footer > * {
-			width: calc(50% - 2em);
-			margin-left: 2em;
+			width: 100%;
+			text-align: center;
 		}
 
 		#footer .copyright {
 			width: 100%;
-			margin: 2.5em 0 2em 0;
+			margin: 0 0 0 0;
 			font-size: 0.8em;
 			text-align: center;
 		}
