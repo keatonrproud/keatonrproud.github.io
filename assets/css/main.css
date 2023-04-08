@@ -2631,12 +2631,12 @@ input, select, textarea {
 
 /* Section/Article */
 
-	section.special, article.special {
+	section.special, article.special {	
 		text-align: center;
 	}
 
 	header.major {
-		margin-bottom: 0;
+		margin-bottom: 3em;
 	}
 
 		header.major h2 {
