@@ -2413,7 +2413,7 @@ input, select, textarea {
 				width: 100%;
 			}
 	@media screen and (max-width: 480px) {
-		img#desktop_only {
+		#desktop_only .image img {
 			display: none;
 		}
 	}
