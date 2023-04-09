@@ -3735,10 +3735,6 @@ input, select, textarea {
 					margin-bottom: 3em;
 				}
 
-				#footer .copyright {
-					text-align: center;
-				}
-
 		}
 
 		@media screen and (max-width: 736px) {
