@@ -2849,11 +2849,11 @@ input, select, textarea {
 				.features li {
 					width: 100%;
 					margin-left: 0;
-					margin-top: 2em;
+					margin-top: 3em;
 				}
 
 					.features li:nth-child(2), .features li:nth-child(3) {
-						margin-top: 2em;
+						margin-top: 3em;
 					}
 
 		}
