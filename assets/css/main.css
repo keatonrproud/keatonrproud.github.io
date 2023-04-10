@@ -2694,6 +2694,7 @@ input, select, textarea {
 					display: none;
 				}
 
+
 		footer.major {
 			margin-top: 0;
 		}
@@ -3744,18 +3745,37 @@ input, select, textarea {
       font-weight: bold;   
 	}
 
-	#hiddentext {
-		display: none;
+	.event_title {
+		font-weight: 600;
 	}
 
-	.info {
-		content: '';
+	.extra_details {
+		font-size: 1.25em;
+		letter-spacing: -0.025em;
 	}
 
-	#info:hover #hiddentext {
-		display: block;
+	li.event:hover + #extra_details {
+			display: none;
+		}
+
+	@media screen and (max-width: 736px) {
+		#extra_details {
+			display: none;
+		}
+
+		#event_title {
+			font-size: 0.9em;
+			letter-spacing: -0.025em;
+			margin-left: -15px;
+			text-align: center;
 	}
 
+		li.event {
+			padding-bottom: 2px;
+			margin-bottom: 5;
+		}
+
+	}
 
 /* Footer */
 
