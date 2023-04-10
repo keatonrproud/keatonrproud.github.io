@@ -3747,16 +3747,9 @@ input, select, textarea {
 
 	.event_title {
 		font-weight: 600;
+		margin-bottom: 2px;
+		font-size: 1em;
 	}
-
-	.extra_details {
-		font-size: 1.25em;
-		letter-spacing: -0.025em;
-	}
-
-	li.event:hover + #extra_details {
-			display: none;
-		}
 
 	@media screen and (max-width: 736px) {
 		#extra_details {
@@ -3764,7 +3757,7 @@ input, select, textarea {
 		}
 
 		#event_title {
-			font-size: 0.9em;
+			font-size: 0.8em;
 			letter-spacing: -0.025em;
 			margin-left: -15px;
 			text-align: center;
