@@ -3671,6 +3671,92 @@ input, select, textarea {
 
 		}
 
+/* Timeline */
+
+/* Base */
+
+#timeline-content {
+  margin-top: 0px;
+  margin-left: 30px;
+  text-align: center;
+}
+
+.timeline {
+  border-left: 4px solid #1A9CE5;
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px;    
+  background: #d1ebfa;
+  margin: 25px auto;  
+  position: relative;
+  padding: 25px;   
+  list-style: none;
+  text-align: left;  
+  font-weight: 100;  
+  max-width: 50%; 
+}
+
+  
+  .event {
+    border-bottom: 1px dashed #a3d7f5;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    color: gray;
+    margin-left: 10px;
+	position: relative;
+   }
+
+   .event:last-of-type { 
+      padding-bottom: 0;
+      margin-bottom: 0; 
+      border: none;      
+    }
+
+    .event:before {
+      position: absolute;
+      left: -100px;
+      display: block;
+      content: attr(data-date);
+      text-align: right;
+      font-weight: 400;    
+      font-size: 1.2em;
+      color: lightgray;
+    }
+
+    .event:after {
+	  position: absolute;
+	  display: block;
+	  box-shadow: 0 0 0 4px #1a9ce5;    
+      left: -42px;        
+      background: white;    
+      border-radius: 50%;  
+      height: 11px;
+      width: 11px;
+      content: "";
+      top: 11px;
+	}
+
+	.event:hover:after {  
+      background: #1a9ce5;   
+	}
+
+	.event:hover:before {  
+      color: #1a9ce5;
+      font-weight: bold;   
+	}
+
+	#hiddentext {
+		display: none;
+	}
+
+	.info {
+		content: '';
+	}
+
+	#info:hover #hiddentext {
+		display: block;
+	}
+
+
 /* Footer */
 
 	#footer {
