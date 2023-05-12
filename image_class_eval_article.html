@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<!--
+	Stellar by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Machine Classification Accuracy</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css">
+		<link rel='icon' href='images/head_white_middle.png'>
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+				<!-- Header -->
+					<header id="header">
+						<img src='images/eval_accuracy_image.png' width = 25%>
+						<br><br>
+						<h1>Image Classification: Machines vs Humans</h1>
+						<p>Finding performance gaps to identify areas for future progress</p>
+						<br>
+					</header>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Content -->
+							<section id="content" class="main">
+								<header class='major'>
+									<h2>Citation</h2>
+								<h4>You can download the original paper and source of all images <a href='http://proceedings.mlr.press/v119/shankar20c/shankar20c.pdf' target='_blank'>here</a>.</h4>
+								<h5>Shankar, V., Roelofs, R., Mania, H., Fang, A., Recht, B. &amp; Schmidt, L.. (2020). Evaluating Machine Accuracy on ImageNet. <i>Proceedings of the 37th International Conference on Machine Learning</i> in <i>Proceedings of Machine Learning Research</i>, 119:8634-8644.</h5>
+								<br>
+								<h2>Introduction</h2>
+								<b>The paper assesses machine classification accuracy on the <a href='https://www.image-net.org/index.php' target='_blank'>ImageNet</a> and <a href='https://github.com/modestyachts/ImageNetV2' target='_blank'>ImageNetV2</a> datasets by comparing with trained human labelers.</b> The study created a new dataset with a total of ~40,000 images and 1,000 classes, taken from the two original datasets. The differences in human vs machine performance on ImageNet and ImageNetV2, about 4% and 11% respectively, are enough for researchers in the field to acknowledge much more work is left to be done. But for people on the outside or who are new to the field, it can be hard to believe models are effective enough that comparing to human performance even makes sense.
+									<br><br>
+								<i>In case you are not familiar I’ll use this paragraph to describe the ImageNet and ImageNetV2 datasets; feel free to move on if you have experience with them already.</i> <b>The largest ImageNet dataset, created in 2009, consists of over 14 million images and 21,000 classes.</b> A smaller subset of around 1.2 million images and 1,000 classes is commonly used for benchmarking model performance in image classification. <b>ImageNetV2 was created in 2019 and is a more challenging dataset.</b> While addressing some limitations of the original dataset, such as label biases and image quality, it added more images with occlusions, different lighting conditions, and unusual poses to further challenge classification models.
+								<br><br>
+								Current state-of-the-art models correctly classify images in ImageNet about 90% of the time. <b>This paper analyses differences between machine and human performance to learn how to better improve models moving forward.</b>
+								<br><br>
+
+
+								<h3>Factors at Play</h3>
+								There are different methods of scoring when considering classification accuracy – common measures are the Top-1 and Top-5 scores. These take the top X classifications in terms of probability for any image and look to see if the correct classification is contained in them. However <b>due to the nature of the images, there is often more than one valid label for a given image.</b> This leads to the Top-1 score typically being overly pessimistic.
+								<br><br>
+								A model is also impacted by the quality of the labeling – <b>images labeled inaccurately will be improperly scored when evaluating a model’s classification.</b> In this study, humans used strict guidelines to re-assign labels to each of the 40,000 images in the subset of the dataset to ensure labeling was as accurate as possible. <i>One interesting finding from this work – the Top-1 scores were directly correlated to the multi-label accuracy of the images!</i>
+								<br><br>
+
+								<h3>Human vs Machine Performance</h3>
+								The comparison between human and machine performance allows the authors to better understand how machines make mistakes, which will direct future efforts for improving model performance. The below plot demonstrates important differences:
+								<img src='posts/image_classification_acc_eval/pics/performance_plots.png' class='blog_img'>
+								On all classes and on ImageNet alone, the performance is quite similar between the best models and the human labelers. <b>When looking at the ImageNetV2 performance for all classes, there is a clear difference between human and machine performance. However this difference becomes much more evident when looking at inanimate classes only</b>, with human labelers being in a tight cluster around 99% with the best models scoring under 95% and 89% for ImageNet and ImageNetV2, respectively. Further, the researchers found <b>significant differences in performance for models between ImageNet and ImageNetV2 but found no such differences for humans!</b>
+								<br><br>
+
+								<h3>Proposals for Future Research</h3>
+								The above findings led to three proposals by the authors for future image classification research:
+								<ol>
+									<li>
+										<b>Measure performance via multi-label accuracy</b>, since it is more reflective of true performance in the ImageNet classification task and Top-1 accuracy is biased towards label quality.
+									<li>
+										<b>Separate performance on inanimate object classes vs highly-specific classes</b> (like dog breeds), since inanimate objects are influenced less by label quality and accuracy.
+									<li>
+										<b>Measure performance of models across different dataset distributions</b>, such as between ImageNet and ImageNetV2, allowing the focus to move toward developing more robust models.
+								</ol>
+
+								<h2>The Experiment</h2>
+								There were four main steps to the experiment – creating multi-label annotations for over half of the images, training human labelers using the remaining unlabeled images from ImageNet, evaluating human labeler performance using class-balanced random samples (half ImageNet, half ImageNetV2), and then reviewing any additional annotations that arose from the evaluation process in the last step. Why is each step so important?
+								<br><br>
+
+								<h3>Multi-Label Annotations</h3>
+								As previously discussed, <b>classifications of many images in the datasets cannot be properly evaluated using only one label.</b> For example, an image of a person working at a desk could get many classifications – human, desk, computer, keyboard, mouse, etc. If the best label for the image is ‘desk’, but the machine returns human as its best guess (and maybe desk is the second choice), then it is wrong by a Top-1 metric but correct in a logical sense – there IS a human in the image! The Top-5 metric considers a classification to be correct if the best choice is somewhere in the model’s top five guesses, leading to a new issues: what if there are only five (or fewer) realistic options for a specific class? For example, there are only five possible turtle breeds in the set of classes and so for any turtle image if the model simply returns all five breeds, it will always be correct. 
+								<br><br>
+
+								<b>Three solutions were created</b> to account for these issues. First, <b>any image with multiple objects/animals was given a separate label for each entity.</b> This way a model classifying an image with a desk, human, keyboard, computer, and mouse would be correct if it guessed any of these labels. Second, <b>images with labels having synonymous classes in the class list would also be assigned these synonym classes.</b> The class ‘tusker’ is considered an animal with visible tusks, and so any image with ‘tusker’ label would also be assigned a label of ‘warthog’, ‘African elephant’, and ‘Indian elephant’, as these match the definition. Third, <b>images whose labels could not be clearly determined as accurate were not considered.</b>
+								<br><br>
+
+
+								<h3>Human Labeler Training</h3>
+								An <a href='https://arxiv.org/pdf/1409.0575.pdf' target='_blank'>initial study from 2015</a> found <b>three main reasons for human inaccuracies – fine-grained class distinctions, unawareness of classes, and insufficient training images.</b>
+								<br><br>
+								To help with distinguishing classes, <b>a specific task for training humans on a variety of similar species was created.</b> Labelers identified images they needed more practice with, got immediate feedback on their classifications, reviewed their answers as a group, and wrote a labeling guide for distinguishing between classes. The researchers even brought in external help via a member of a nearby kennel club for support in identifying different dog breeds! 
+								<br><br>
+								To improve the awareness of all the classes, <b>a user interface was created for the humans to search across the ImageNet class options.</b> This removed the necessity (and difficulty) of needing to recall every class option throughout the experiment.
+								<br><br>
+								Lastly, <b>researchers provided almost 10x the training images for each class type compared to the aforementioned 2015 study</b>, leading to an improvement in labeling performance of the humans.
+								<br><br>
+
+								<h3>Human Performance</h3>
+								1,000 images from the ImageNet validation set and 1,000 images from ImageNetV2 were combined to create the test sets for evaluating human performance. The test set was sampled from each dataset in a class-balanced manner, so every class had an equal distribution of images in the set. <b>Participants classified every image in the dataset and only had access to the labeling guide they created and a training set for each class.</b> <i>The median time to complete the task was a whopping 36 hours for the 2,000 images!</i>
+								<br><br>
+
+								<h3>Post-Performance Review</h3>
+								<b>When creating the original multi-labels for each image, the authors used a large set of individual classifications created by models.</b> If no model, or a small enough number, had a certain classification for an image then it would not be present in its set of labels. Since human labelers may lead to image classifications that no model was able to pick up, that does not mean they were wrong! <b>This led to a required post-performance annotation session to add any additional labels to the multi-label set for each image to ensure labels by humans that should have been correct were not marked as inaccurate due to model errors.</b> To avoid bias in this process, no labeler reviewed their own predictions and model labels were randomly included in the list of human labels to review. Over 65% of the images had no changes, 25% received new labels, and under 15% had their labels changed.
+								<br><br>
+
+								<h2>Main Results</h2>
+								The essential results stem from comparing models and humans in two areas; accuracy and robustness. 
+								<br><br>
+
+								As previously discussed, <b>human labelers performed significantly better than the best model on both ImageNet and ImageNetV2.</b> Critically the two participants who did not annotate prior to the evaluation (D and E) scored just as high as those who did, indicating performance was not influenced by image annotation. You can see the accuracy scores broken down by segment, dataset, and participant below. <b>Statistically significant differences also exist between model performance on ImageNet vs ImageNetV2 and human performance on the whole dataset vs objects only.</b>
+
+								<img src='posts/image_classification_acc_eval/pics/performance_table.png' class='blog_img' width=50px>
+
+								<b>The specific areas in which humans and machines make mistakes is valuable for improving future model performance.</b> All human participants failed to classify ten images – one monkey and nine dog pictures – further supporting the difficulty of these fine-grained distinctions for humans. On the other hand, all 72 models considered failed on 27 images consisting of over two-thirds object classes and the rest organism classes. The performance gap in object vs organism classes is an interesting area to explore moving forward. 
+								<br><br>
+
+								<h2>Conclusion</h2>
+								The paper concludes by making three more suggestions for future research: addressing the current lack of model robustness to distribution shifts, exploring the robustness of untrained human performance for comparison, and studying the types of distributions most affecting model performance. <b>If the goal of building models is to eventually exceed human performance, we will progress faster by finding and explaining existing gaps in smaller domains (i.e., dog breeds) than looking solely at the accuracy score.</b>
+								<br><br>
+								Although the paper is focused on identifying areas to improve, I am left admiring the current level of model performance in image classification. <b>In my perspective it is a question of when, not if, models will surpass human performance</b> – for image classification and many other tasks.
+								<br>
+
+							</section>
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<section>	
+							<dl class='alt'>
+							<ul class="icons">
+								<li><a rel='prefetch' href="https://github.com/keatonrproud" class="icon brands fa-github alt" target='_blank'><span class="label">GitHub</span></a></li>
+								<li><a rel='prefetch' href="https://linkedin.com/in/keatonrproud" class="icon brands fa-linkedin-in alt" target='_blank'><span class="label">LinkedIn</span></a></li>
+								<li><a rel='prefetch' href="https://twitter.com/keatonrproud" class="icon brands fa-twitter alt" target='_blank'><span class="label">Twitter</span></a></li>
+							</ul>
+								<p><i class='fa fa-envelope fa-fw'>&nbsp; </i><a href="mailto: keaton.r.proud@gmail.com">keaton.r.proud@gmail.com</a></p>
+								<p><i class='fa fa-phone fa-fw'>&nbsp;</i>+39 (348) 274-6953</p>								
+							</dl>
+						</section>
+						<p class='copyright'>Design inspired by <a href="https://aj.lkn.io">@ajlkn</a></p>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
