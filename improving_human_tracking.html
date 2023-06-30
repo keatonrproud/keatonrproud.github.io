@@ -1,0 +1,173 @@
+<!DOCTYPE HTML>
+<!--
+	Stellar by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Improving Human Tracking</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css">
+		<link rel='icon' href='images/head_white_middle.png'>
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+				<!-- Header -->
+					<header id="header">
+						<img src='posts/4D_pose_estimation/images/banner.png' width=60%>
+						<br><br>
+						<h1>Improving Human Tracking</h1>
+						<p>Using HMR to improve pose estimation, tracking, and action recognition</p>
+						<br>
+					</header>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Content -->
+							<section id="content" class="main">
+								<header class='major'>
+									<h2>Citation</h2>
+								<h4>You can download the original paper and source of all images <a href='https://arxiv.org/pdf/2305.20091.pdf' target='_blank'>here</a>.</h4>
+								<h5>Goel, S., Pavlakos, G., Rajasegaran, J., Kanazawa, A., &amp; Malik, J. (2023). Humans in 4D: Reconstructing and Tracking Humans with Transformers. <i>arXiv preprint arXiv</i>:2305.20091.</h5>
+								<br>
+
+						<h2>Introduction</h2>
+								<b>This paper seeked to improve on the performance of existing pose estimation, tracking, and action  recognition models.</b> The proposed model works by obtaining 3D 'meshes' (or reconstructions) of humans in static images at a very high accuracy, then bridging these reconstructions across video frames. A more in-depth outline of the model is here:
+								<img src='posts/4D_pose_estimation/images/model_outline.PNG' class='blog_img'>
+								<br>
+								<b>The paper relies on past work related to human mesh tracking (<a href='https://arxiv.org/pdf/1712.06584.pdf' target='_blank'>HMR</a>) and 3D tracking (<a href='https://arxiv.org/pdf/2112.04477.pdf' target='_blank'>PHALP</a>) and proposes an end-to-end transformer-based model of PHALP and HMR</b>. Transformerization is essentially converting existing networks (ie CNNs and LSTMs, or Long Short-Term Memory) into transformer networks.
+								<br><br>
+							
+							<h3>Key Contributions</h3>
+								The paper contributes three key results to the literature:
+								<ol>
+									<li>
+										Propose a <b>'transformerized' architecture for HMR, called HMR 2.0</b>, which outperforms existing 3D pose estimation approaches.
+									<li>
+										Propose <b>4DHumans, which achieves state-of-the-art results for human tracking</b>.
+									<li>
+										Demonstrate <b>improved pose accuracy and reconstructions lead to improved action recognition</b>.
+								</ol>
+								<br>
+
+						<h2>Related Work</h2>
+							The review of related work in the literature spans four key areas:
+							<br><br>
+
+							<h3>Human Mesh Recovery from a Single Image</h3>
+								<b>Most of the existing work relies on the original HMR model, which still performs very well</b>. There have been many advancements to it, but often relying on domain-specific decisions and increasing complexity.
+								<br><br>
+
+							<h3>Human Mesh and Motion Recovery from a Video</h3>
+								<b>Most existing designs feature a temporal encoder</b> to fuse features across time (frames) in a video, such as VIBE, MEVA, and TCMR. The <b>key limitation however is they work best only when tracking is simple</b> with few occlusions. <b>4DHumans solves this by tracking reconstructions in 3D space</b>, allowing for objects to move behind one another.
+								<br><br>
+
+							<h3>Tracking People in Video</h3>
+								Current state-of-the-art tracking is done via HMR and PHALP, which converts images into 3D reconstructions, then tracks them over time. <b>PHALP is used in HMR 2.0 and 4DHumans, but is changed slightly to be more generalisable</b>.
+								<br><br>
+
+							<h3>Action Recognition</h3>
+								Action recognition takes some input (image, body poses, etc) and returns a classification of the predicted action being performed. Recent success use appearance features from raw video (ie SlowFast and MViT) or extract features from body pose information (Po-Tion and JMRN). <b>The action recognition pipeline used in this paper relies on combining video-based features with 3D reconstruction features</b>.
+								<br><br><br>
+
+						<h2>Reconstructing People</h2>
+							<h3>Creating the Reconstructions</h3>
+								<b><a href='https://files.is.tue.mpg.de/black/papers/SMPL2015.pdf' target='_blank'>SMPL models</a> are used to create poses and reconstructions of the body</b> and a perspective camera model with fixed focal length and intrinsic parameters is used for modeling the camera. <b>A rotation matrix and translation vector are used to map points from an SMPL model to an image</b>. 
+								<br><br>
+
+							<h3>Architecture</h3>
+								The paper uses an <b>'end-to-end transformer architecture with no domain-specific design choices' which outperforms all existing architectures</b>. <a href='https://arxiv.org/abs/2204.12484' target='_blank'>ViT</a>, a vision transformer, was used to process images. Images were processed into input tokens, then fed into the transformer to get output tokens, and finally output tokens were processed by a standard transformer decoder with multi-head self-attention (read the well-known paper <a href='https://arxiv.org/abs/1706.03762' target='_blank'>Attention is All You Need</a> for more details). The decoder processes input tokens by cross-attending to output tokens and provides a linear readout of the model parameters.
+								<br><br>
+							<h3>Losses</h3>
+								<b>The researchers used the typical best practices in current HMR literature for their losses (2D losses, 3D losses, and a discriminator)</b>. A standard MSE loss was used whenever they had ground-truth (or annotated) SMPL parameters in an image and a discriminator was trained for each factor of the body model to ensure the predicted pose was actually valid for a human.
+								<br><br>
+
+								Additionally, they used two other losses based on the information available for an image. When accurate 3D keypoint annotations were available, they used an L1 loss of the 3D keypoints. When accurate 2D keypoint annotations were available, they used an L1 loss of the predicted keypoints from camera transformations of the known 2D keypoints.
+								<br><br>
+
+							<h3>Working with Unlabeled Datasets</h3>
+								The researchers <b>built 'pseudo-ground truth' SMPL parameters</b> from additional datasets by using an off-the-shelf detector and body keypoint estimator to get the corresponding image 2D points, then <b>fit an SMPL reconstruction to the 2D keypoints</b>.
+								<br><br><br>
+
+						<h2>Tracking People</h2>
+							The pipeline for tracking was mostly built upon PHALP, which works as follows:
+							<ol>
+									<li><b>Create 3D reconstructions</b> of people in a given frame,
+									<li><b>Create <a href='https://en.wiktionary.org/wiki/tracklet#:~:text=tracklet%20(plural%20tracklets),by%20an%20image%20recognition%20system.' target='_blank'>tracklets</a> of people across frames</b> by matching a person's current frame reconstruction with the closest match between its predicted reconstruction in the next frame and all the possible ground-truth reconstructions in the next frame, then
+									<li>By <b>working with reconstructions in 3D space</b>, the model can deal with occlusions more effectively. 
+								</ol>
+
+							The model was <b>trained using masking of random pose tokens</b> and comparing predicted poses versus the 
+							ground-truth poses, demonstrated below. This <b>allowed the model to not only make predictions, but create representations for people even when their image in a given frame was fully occluded</b>.
+							<img src='posts/4D_pose_estimation/images/making_predictions.PNG' class='blog_img'>
+
+
+						<h2>Experiments</h2>
+							<h3>Key Results</h3>
+								<ol>
+									<li>HMR 2.0 outperforms previous methods of 2D and 3D pose estimation.
+									<li>4DHumans achieves state-of-the-art tracking performance.
+									<li>More accurate poses lead to improved accuracy of action recognition tasks. 
+								</ol>
+							<h3>Pose Accuracy</h3>
+								HMR 2.0a is a reduced model trained only on the typical datasets in the literature, meanwhile HMR 2.0b is a larger model. <b>HMR 2.0a surpassed all previous baselines</b> across all 3D metrics, meanwhile <b>HMR 2.0b had improved performance over all (including HMR 2.0a) 2D metrics, especially when testing on unusual poses</b>.
+								<img src='posts/4D_pose_estimation/images/2d_evaluation.PNG' class='blog_img'>
+							<h3>Tracking</h3>
+								Tracking was evaluated based on ID Switches (IDs), Multiple Object Tracking Accuracy (MOTA), the ratio of correct detections over the average number of ground-truth detections (IDF1), and Higher Order Tracking Accuracy (HOTA). <b>HMR 2.0 was in the top group of models for 3D pose estimation and 4DHumans surpassed baselines across all evaluated tracking metrics</b>.
+								<br><br>
+							<h3>Action Recognition</h3>
+								The researchers trained a separate action classifier using SMPL poses as inputs to make action predictions. <b>The HMR 2.0 trained on SMPL poses outperformed baselines across all different metrics</b>.
+								<img src='posts/4D_pose_estimation/images/action_recognition_evaluation.PNG' class='blog_img'>
+
+						<h2>Conclusion</h2>
+								The paper concludes by making <b>three suggestions for future research</b>: 
+								<ol>
+									<li>The <b>use of SMPL creates limitations</b> and using improved models would allow for hand pose and facial expression predictions,
+									<li>The current model considers people independently, so <b>contact and interaction between individuals is not always modeled well</b>, and
+									<li><b>Lower input image resolution reduces quality of the 3D reconstructions</b>. 
+								</ol>
+
+								<b>Overall, the paper showed remarkable performance across pose estimation, tracking, and action recognition</b>. Below are a qualitative evaluation between HMR 2.0 and previous models (PyMAF-X and PARE), as well as HMR 2.0's reconstructions with images containing unusual poses.
+								<img src='posts/4D_pose_estimation/images/qualitative_evaluation.PNG' class='blog_img'>
+								<br>
+								<img src='posts/4D_pose_estimation/images/example_in_unusual_pose.PNG' class='blog_img'>
+							</section>
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<section>	
+							<dl class='alt'>
+							<ul class="icons">
+								<li><a rel='prefetch' href="https://github.com/keatonrproud" class="icon brands fa-github alt" target='_blank'><span class="label">GitHub</span></a></li>
+								<li><a rel='prefetch' href="https://linkedin.com/in/keatonrproud" class="icon brands fa-linkedin-in alt" target='_blank'><span class="label">LinkedIn</span></a></li>
+								<li><a rel='prefetch' href="https://twitter.com/keatonrproud" class="icon brands fa-twitter alt" target='_blank'><span class="label">Twitter</span></a></li>
+							</ul>
+								<p><i class='fa fa-envelope fa-fw'>&nbsp; </i><a href="mailto: keaton.r.proud@gmail.com">keaton.r.proud@gmail.com</a></p>
+								<p><i class='fa fa-phone fa-fw'>&nbsp;</i>+39 (348) 274-6953</p>								
+							</dl>
+						</section>
+						<p class='copyright'>Design inspired by <a href="https://aj.lkn.io">@ajlkn</a></p>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
