@@ -9,9 +9,9 @@
 		<title>Improving Human Tracking</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css">
-		<link rel='icon' href='images/head_white_middle.png'>
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<link rel="stylesheet" href="../assets/css/main.css">
+		<link rel='icon' href='../images/head_white_middle.png'>
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload">
 
@@ -20,7 +20,7 @@
 			<div id="wrapper">
 				<!-- Header -->
 					<header id="header">
-						<img src='posts/4D_pose_estimation/images/banner.png' width=60%>
+						<img src='../posts/4D_pose_estimation/images/banner.png' width=60%>
 						<br><br>
 						<h1>Improving Human Tracking</h1>
 						<p>Using HMR to improve pose estimation, tracking, and action recognition</p>
@@ -40,7 +40,7 @@
 
 						<h2>Introduction</h2>
 								<b>This paper seeked to improve on the performance of existing pose estimation, tracking, and action  recognition models.</b> The proposed model works by obtaining 3D 'meshes' (or reconstructions) of humans in static images at a very high accuracy, then bridging these reconstructions across video frames. A more in-depth outline of the model is here:
-								<img src='posts/4D_pose_estimation/images/model_outline.PNG' class='blog_img'>
+								<img src='../posts/4D_pose_estimation/images/model_outline.PNG' class='blog_img'>
 								<br>
 								<b>The paper relies on past work related to human mesh tracking (<a href='https://arxiv.org/pdf/1712.06584.pdf' target='_blank'>HMR</a>) and 3D tracking (<a href='https://arxiv.org/pdf/2112.04477.pdf' target='_blank'>PHALP</a>) and proposes an end-to-end transformer-based model of PHALP and HMR</b>. Transformerization is essentially converting existing networks (ie CNNs and LSTMs, or Long Short-Term Memory) into transformer networks.
 								<br><br>
@@ -106,7 +106,7 @@
 
 							The model was <b>trained using masking of random pose tokens</b> and comparing predicted poses versus the 
 							ground-truth poses, demonstrated below. This <b>allowed the model to not only make predictions, but create representations for people even when their image in a given frame was fully occluded</b>.
-							<img src='posts/4D_pose_estimation/images/making_predictions.PNG' class='blog_img'>
+							<img src='../posts/4D_pose_estimation/images/making_predictions.PNG' class='blog_img'>
 
 
 						<h2>Experiments</h2>
@@ -118,13 +118,13 @@
 								</ol>
 							<h3>Pose Accuracy</h3>
 								HMR 2.0a is a reduced model trained only on the typical datasets in the literature, meanwhile HMR 2.0b is a larger model. <b>HMR 2.0a surpassed all previous baselines</b> across all 3D metrics, meanwhile <b>HMR 2.0b had improved performance over all (including HMR 2.0a) 2D metrics, especially when testing on unusual poses</b>.
-								<img src='posts/4D_pose_estimation/images/2d_evaluation.PNG' class='blog_img'>
+								<img src='../posts/4D_pose_estimation/images/2d_evaluation.PNG' class='blog_img'>
 							<h3>Tracking</h3>
 								Tracking was evaluated based on ID Switches (IDs), Multiple Object Tracking Accuracy (MOTA), the ratio of correct detections over the average number of ground-truth detections (IDF1), and Higher Order Tracking Accuracy (HOTA). <b>HMR 2.0 was in the top group of models for 3D pose estimation and 4DHumans surpassed baselines across all evaluated tracking metrics</b>.
 								<br><br>
 							<h3>Action Recognition</h3>
 								The researchers trained a separate action classifier using SMPL poses as inputs to make action predictions. <b>The HMR 2.0 trained on SMPL poses outperformed baselines across all different metrics</b>.
-								<img src='posts/4D_pose_estimation/images/action_recognition_evaluation.PNG' class='blog_img'>
+								<img src='../posts/4D_pose_estimation/images/action_recognition_evaluation.PNG' class='blog_img'>
 
 						<h2>Conclusion</h2>
 								The paper concludes by making <b>three suggestions for future research</b>: 
@@ -135,9 +135,9 @@
 								</ol>
 
 								<b>Overall, the paper showed remarkable performance across pose estimation, tracking, and action recognition</b>. Below are a qualitative evaluation between HMR 2.0 and previous models (PyMAF-X and PARE), as well as HMR 2.0's reconstructions with images containing unusual poses.
-								<img src='posts/4D_pose_estimation/images/qualitative_evaluation.PNG' class='blog_img'>
+								<img src='../posts/4D_pose_estimation/images/qualitative_evaluation.PNG' class='blog_img'>
 								<br>
-								<img src='posts/4D_pose_estimation/images/example_in_unusual_pose.PNG' class='blog_img'>
+								<img src='../posts/4D_pose_estimation/images/example_in_unusual_pose.PNG' class='blog_img'>
 							</section>
 
 					</div>
