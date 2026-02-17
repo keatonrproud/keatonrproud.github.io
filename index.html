@@ -1,304 +1,639 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<title>Keaton Proud</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css">
-		<link rel='icon' href='images/head_white_middle.png'>
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Keaton Proud</title>
+  <link rel="icon" href="images/head_white_middle.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    :root {
+      --bg: #fafafa;
+      --surface: #fff;
+      --text: #111;
+      --text-muted: #555;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --border: #e5e7eb;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,.06);
+      --shadow-hover: 0 10px 40px -15px rgba(0,0,0,.15);
+      --font-sans: 'Inter', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --max-width: 720px;
+    }
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      font-size: 1.0625rem;
+      line-height: 1.65;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
 
-				<!-- Header -->
-					<header id="header" class="alt">
-						<span class="logo"><img src="images/head_white_middle.png" alt=""
-									width="250"
-									height="250" /></span>
-						<b><h1 style='font-weight: bold'>Keaton Proud</h1></b>
-						<p>Building data-driven tools for sport and business</p>
-							<dl class='alt' style='margin:1em 0 0 0'>
-							<ul class="icons" style='margin:1em 0 1em 0'>
-								<li><a rel='prefetch' href="https://github.com/keatonrproud" class="icon brands fa-github alt" target='_blank'><span class="label">GitHub</span></a></li>
-								<li><a rel='prefetch' href="https://linkedin.com/in/keatonrproud" class="icon brands fa-linkedin-in alt" target='_blank'><span class="label">LinkedIn</span></a></li>
-								<li><a rel='prefetch' href="https://twitter.com/keatonrproud" class="icon brands fa-twitter alt" target='_blank'><span class="label">Twitter</span></a></li>
-							</ul>
-								<p><i class='fa fa-envelope fa-fw'>&nbsp; </i><a href="mailto: keaton.r.proud@gmail.com">keaton.r.proud@gmail.com</a></p>
-<p><i class='fa fa-phone fa-fw'>&nbsp;</i>+39 (348) 274-6953</p>								
-	</dl>
+    /* Dot grid background */
+    .dot-grid {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image: radial-gradient(circle, rgba(0,0,0,.09) 1px, transparent 1px);
+      background-size: 28px 28px;
+      transition: background-position .15s ease-out;
+    }
 
-					</header>
+    .wrap { max-width: var(--max-width); margin: 0 auto; padding-left: 1.5rem; padding-right: 1.5rem; position: relative; z-index: 1; }
 
-				<!-- Nav -->
-					<nav id="nav">
-						<ul>
-							<li><a href="#about" class="active">About Me</a></li>
-							<li><a href="#projects">Projects</a></li>
-							<li><a href="#journey">Journey</a></li>
-							<li><a href="#presentations">Presentations</a></li>
-							<li><a href="#research">Research</a></li>
-							<li><a href="#writing">Writing</a></li>
-						</ul>
-					</nav>
+    a { cursor: pointer; }
 
-				<!-- Main -->
-					<div id="main">
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 3rem 1.5rem 5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-photo {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1.5rem;
+      border: 3px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .hero h1 {
+      font-family: var(--font-mono);
+      font-size: clamp(1.75rem, 5vw, 2.25rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 0.5rem;
+    }
+    .hero-tagline {
+      color: var(--text-muted);
+      font-size: 1.125rem;
+      margin: 0 0 1.75rem;
+      max-width: none;
+      white-space: nowrap;
+    }
+    .hero-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9375rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color .2s;
+      cursor: pointer;
+    }
+    .hero-links a:hover { color: var(--accent); }
+    .hero-links .sep { color: var(--border); user-select: none; }
 
-						<!-- Introduction -->
-							<section id="about" class="main special">
-								<div class='spotlight'>
-									<div class="content">																
-									<header class="major">
-											<h2>About Me</h2>
-										</header>
+    /* Scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--text-muted);
+      opacity: 0.5;
+      animation: bounce 2.2s ease-in-out infinite;
+    }
+    .scroll-hint span {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .scroll-hint i { font-size: 1rem; }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
 
-Born and raised in Toronto, Canada. Currently in Milan, Italy.
+    /* Sections */
+    section {
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    section + section {
+      border-top: 1px solid var(--border);
+    }
+    section.reveal {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .section-title {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted) !important;
+      margin: 0 0 0.75rem;
+    }
+    h2 { font-size: 1.5rem; font-weight: 600; margin: 0 0 1rem; letter-spacing: -0.02em; }
 
-<br><br>
+    /* About */
+    .about p {
+      margin: 0 0 0.75rem;
+      color: var(--text-muted);
+    }
+    .about p:last-child { margin-bottom: 0; }
+    .about a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color .2s;
+      cursor: pointer;
+    }
+    .about a:hover { border-bottom-color: var(--accent); }
 
-Focused on building tools that reduce barriers to modern data + technology solutions in sport and business. If you want to work together, <a href='mailto: keaton.r.proud@gmail.com'>shoot me an email</a>.
+    /* Projects grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 1rem;
+    }
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      transition: box-shadow .25s, transform .25s, border-color .25s;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      color: inherit;
+    }
+    .project-card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+    .project-card-static {
+      cursor: default;
+    }
+    .project-card-static:hover {
+      box-shadow: var(--shadow);
+      transform: none;
+      border-color: var(--border);
+    }
+    .project-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0 0 0.3rem;
+    }
+    .project-card p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+    .project-card .project-link-label {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--accent);
+      margin-top: 0.6rem;
+      display: block;
+    }
+    .projects-footer {
+      margin-top: 1rem;
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+    }
+    .projects-footer a {
+      color: var(--accent);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .projects-footer a:hover { text-decoration: underline; }
 
-<br><br>
+    /* Journey timeline */
+    .timeline { position: relative; padding-left: 1.25rem; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+      bottom: 0.5rem;
+      width: 2px;
+      background: var(--border);
+    }
+    .timeline-item {
+      padding-bottom: 1.5rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-hidden { display: none; }
+    .timeline-hidden.timeline-visible { display: block; }
+    .timeline-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 1.25rem;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--accent);
+      cursor: pointer;
+      margin-top: 1.25rem;
+      transition: border-color .2s, background .2s;
+    }
+    .timeline-toggle:hover {
+      border-color: var(--accent);
+      background: rgba(37,99,235,.04);
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -4.5px;
+      top: 0.55rem;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--border);
+      border: 2px solid var(--bg);
+    }
+    .timeline-date {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+    .timeline-content h3 {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      margin: 0 0 0.15rem;
+      line-height: 1.4;
+    }
+    .timeline-content h3 a {
+      color: var(--text);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .timeline-content h3 a:hover { color: var(--accent); }
+    .timeline-content p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+    .journey-footer {
+      margin-top: 1.25rem;
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+    }
+    .journey-footer a {
+      color: var(--accent);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .journey-footer a:hover { text-decoration: underline; }
 
-Working in data with the <a href='https://mileiq.com/' target="_blank">MileIQ</a> team at <a href='https://www.bendingspoons.com/' target="_blank">Bending Spoons</a>. Completed a <a href='https://corsi.unibo.it/2cycle/StatisticalSciences/course-structure-diagram/piano/2022/9222/A91/000/2022' target='_blank'>Master's in Statistics</a> in the Data Science stream at the University of Bologna.
+    /* Publication */
+    .publication {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .publication-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0 0 0.4rem;
+      line-height: 1.4;
+    }
+    .publication-meta {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      font-style: italic;
+      margin: 0 0 0.75rem;
+    }
+    .publication-links { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .publication-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .publication-links a:hover { text-decoration: underline; }
 
-<br><br>In my free time you can find me with family and friends or building something. </p>
-									</div>
-									<span class="image"><img id='desktop_only' src="images/head_mountains.png" alt="" /></span>
-							</section>
+    /* Sticky mini header */
+    .mini-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: transparent;
+      padding: 0.6rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transform: translateY(-100%);
+      opacity: 0;
+      transition: transform .3s ease, opacity .3s ease;
+      pointer-events: none;
+    }
+    .mini-header.visible {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .mini-header img {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .mini-header span {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text);
+    }
 
-						<!-- Projects -->
-							<section id="projects" class="main special">
-								<header class="major">
-									<h2>Public Projects</h2>
-								</header>
-								<ul class="features">
-									<li>
-										<span class="icon solid major style1 fa-network-wired"></span>
-										<h3 style='font-weight:400'>
-										ML Classifier Comparison
-										</h3>
-										<p>Compared six ML classifiers on COVID-19 data from Brazil. Methods of improving efficiency and effectiveness are included.
-										<br>
-										<br>
-										<a rel='prefetch' href="https://github.com/keatonrproud/ML_classifier_comparison/blob/main/project.ipynb" class='button primary'
-										target='_blank'>
-										Notebook
-										</a>
-										<a rel='prefetch' href="https://github.com/keatonrproud/ML_classifier_comparison" class='button'
-										target='_blank' style='margin-left:0.5em'>
-										Repo
-										</a>
-										</p>
-									</li>
+    /* Footer */
+    footer {
+      margin-top: 3rem;
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    footer .hero-links { margin-bottom: 0; }
+    footer a { color: var(--accent); text-decoration: none; cursor: pointer; }
+    footer a:hover { text-decoration: underline; }
 
-									<li>
-										<span class='icon solid major style2 fa-utensils'></span>
-										<h3 style='font-weight:400'>Forkast</h3>
-										<p>Built a recipe sharing, planning, and ingredient list creation tool for friends and family.
-										<br>
-										<br>
-										<a rel='prefetch' href="https://forkast.club" class='button primary'
-										target='_blank'>
-										Web App
-										</a>
-										</p>
-									</li>
+    @media (max-width: 600px) {
+      .hero-tagline { white-space: normal; max-width: 30ch; }
+      section { padding-top: 3rem; padding-bottom: 3rem; }
+      .projects-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+      .project-card-hide-mobile { display: none; }
+      .mini-header {
+        background: rgba(250,250,250,.95);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+      }
+    }
+    @media (max-width: 400px) {
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dot-grid" id="dotGrid"></div>
 
- 									<li>
-										<span class="icon solid major style5 fa-volleyball-ball"></span>
-										<h3 style='font-weight:400'>SpeedLog</h3>
-										<p>An app for volleyball teams to easily track and analyze serve data, including parsing images of handwritten data.
-										<br>
-										<br>
-										<a rel='prefetch' href="https://speedlog.app" class='button primary'
-										target='_blank'>
-										Web App
-										</a>
-										</p>
-									</li>
-								</ul>
+  <div class="mini-header" id="miniHeader">
+    <img src="images/head_white_middle.png" alt="" width="28" height="28" />
+    <span>Keaton Proud</span>
+  </div>
 
-								<footer class="major">
-									<ul class="actions special">
-										<li>View the rest of my portfolio on <a href="https://www.github.com/keatonrproud" target='_blank'>Github</a>.
-										<br>
-										<br>
-										<a href="mailto: keaton.r.proud@gmail.com" style='color:#1a9ce5; font-weight:400'>Have a project in mind?</a></li>
-									</ul>
-								</footer>
-							</section>
+  <header class="hero">
+    <img class="hero-photo" src="images/head_white_middle.png" alt="Keaton Proud" width="160" height="160" />
+    <h1>Keaton Proud</h1>
+    <p class="hero-tagline">Building data-driven tools for sport and business.</p>
+    <nav class="hero-links">
+      <a href="https://github.com/keatonrproud" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+      <span class="sep">&middot;</span>
+      <a href="https://linkedin.com/in/keatonrproud" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+      <span class="sep">&middot;</span>
+      <a href="mailto:keaton.r.proud@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
+    </nav>
+    <div class="scroll-hint" id="scrollHint">
+      <span>Scroll</span>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+  </header>
 
-						<!-- Journey -->
-							<section id="journey" class="main special">
-								<header class="major">
-									<h2>Journey</h2>
-									<h4 style='font-weight:0'> My data science timeline. For more career details, check out my profile on 
-										<a rel='prefetch' href="https://linkedin.com/in/keatonrproud" target='_blank'>LinkedIn</a>.
-									</h4>
-								</header>
-								<div id="timeline-content">
-							  <ul class="timeline">
+  <main>
+    <section id="about" class="about wrap">
+      <p class="section-title">About</p>
+      <p>I'm from Toronto currently based in Milan. Excited about improving access to modern data + technology solutions in sport and business.</p>
+	  <br>
+      <p>Day-to-day, I work in Data with the <a href="https://mileiq.com/" target="_blank" rel="noopener">MileIQ</a> product team at <a href="https://www.bendingspoons.com/" target="_blank" rel="noopener">Bending Spoons</a>. I did my <a href="https://corsi.unibo.it/2cycle/StatisticalSciences/course-structure-diagram/piano/2022/9222/A91/000/2022" target="_blank" rel="noopener">Master's in Statistics</a> (Data Science) at the University of Bologna.</p>
+	  <p>Outside of that, I'm usually with family, friends, or working on a side project.</p>
+	  <br>
+      <p><a href="mailto:keaton.r.proud@gmail.com">Say hi</a> if you want to chat or work together.</p>
+    </section>
 
-								<li class="event" data-date="2025">
+    <section id="projects" class="wrap">
+      <p class="section-title">Projects</p>
+      <h2>Personal and learning</h2>
+      <div class="projects-grid">
+        <a class="project-card" href="https://openbookenglish.com/student" target="_blank" rel="noopener">
+          <h3>Openbook English</h3>
+          <p>Teaching platform for English teachers.</p>
+          <span class="project-link-label">View &rarr;</span>
+        </a>
+        <a class="project-card" href="https://speedlog.app" target="_blank" rel="noopener">
+			<h3>SpeedLog</h3>
+			<p>Volleyball serve tracking and analysis.</p>
+			<span class="project-link-label">View &rarr;</span>
+		  </a>
+		<a class="project-card" href="https://forkast.club" target="_blank" rel="noopener">
+          <h3>Forkast</h3>
+          <p>Recipe sharing and meal planning.</p>
+          <span class="project-link-label">View &rarr;</span>
+        </a>
+        <a class="project-card" href="https://nexus.keatonrproud.com" target="_blank" rel="noopener">
+          <h3>Nexus</h3>
+          <p>Bug tracking and project management.</p>
+          <span class="project-link-label">View &rarr;</span>
+        </a>
+        <div class="project-card project-card-static">
+          <h3>TIGS</h3>
+          <p>Desktop volleyball analytics app.</p>
+        </div>
+        <div class="project-card project-card-static project-card-hide-mobile">
+          <h3>Server Infra</h3>
+          <p>Self-hosted server for all my projects.</p>
+        </div>
+      </div>
+      <p class="projects-footer">More on <a href="https://github.com/keatonrproud" target="_blank" rel="noopener">GitHub</a></p>
+    </section>
 
-							      <div id='event_title'><h3 style='font-weight:400; margin-bottom: 2px'>Moving to Product at <a href="https://www.bendingspoons.com" target="_blank">Bending Spoons</a>: <a href="https://mileiq.com/" target="_blank">MileIQ</a></h3></div>
+    <section id="journey" class="wrap">
+      <p class="section-title">Journey</p>
+      <h2>How I got here...</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <span class="timeline-date">2025</span>
+          <div class="timeline-content">
+            <h3><a href="https://www.bendingspoons.com" target="_blank" rel="noopener">Bending Spoons</a>: <a href="https://mileiq.com/" target="_blank" rel="noopener">MileIQ</a> + Data</h3>
+			<p>Moved from company-wide tooling into a product team, focused on growing MileIQ and building our data infra.</p>
+		</div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-date">2025</span>
+          <div class="timeline-content">
+            <h3>Self-hosting + managing servers</h3>
+            <p>Started managing my own remote server to host personal web apps with Docker, Nginx, and monitoring.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-date">2024</span>
+          <div class="timeline-content">
+            <h3><a href="https://www.bendingspoons.com" target="_blank" rel="noopener">Bending Spoons</a>: Data + ETLs</h3>
+            <p>Python, BigQuery, and SQL for app monetization data pipelines across payment providers.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-date">2023</span>
+          <div class="timeline-content">
+            <h3>Building TIGS</h3>
+            <p>A desktop Python app to bring modern volleyball analytics to smaller teams. It's how I first learned to code a <i>real</i> project.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-date">2022</span>
+          <div class="timeline-content">
+            <h3><a href="https://corsi.unibo.it/2cycle/StatisticalSciences/course-structure-diagram/piano/2022/9222/A91/000/2022" target="_blank" rel="noopener">Master's in Statistics</a>, Bologna</h3>
+            <p>Data Science stream at the University of Bologna. Got in with an unrelated Bachelor's with my own portfolio.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-date">2021</span>
+          <div class="timeline-content">
+            <h3>Going deeper with programming</h3>
+            <p>Used COVID downtime to build personal and professional tools in Python, R, Shiny, Tableau, and more.</p>
+          </div>
+        </div>
+        <div class="timeline-item timeline-hidden" data-extra>
+          <span class="timeline-date">2020</span>
+          <div class="timeline-content">
+            <h3>Data-driven processes at Queen's</h3>
+            <p>Built methods for quantifying decisions and <a href="https://onedrive.live.com/redir?resid=D4BA416D68943AB6!41305&authkey=!AEevt0aaNUYXxqo&ithint=file%2cpptx&e=gV82Rz" target="_blank" rel="noopener">presented our approach</a> to the High-Performance department.</p>
+          </div>
+        </div>
+        <div class="timeline-item timeline-hidden" data-extra>
+          <span class="timeline-date">2019</span>
+          <div class="timeline-content">
+            <h3>Python + R in coaching</h3>
+            <p>Started building basic data pipelines for the volleyball program. Collecting, analyzing, and presenting findings to the team.</p>
+          </div>
+        </div>
+        <div class="timeline-item timeline-hidden" data-extra>
+          <span class="timeline-date">2018</span>
+          <div class="timeline-content">
+            <h3>Coaching with Queen's Volleyball</h3>
+            <p>Joined the Queen's Men's team coaching staff. Stayed until 2022, which is where I found my way into data.</p>
+          </div>
+        </div>
+        <div class="timeline-item timeline-hidden" data-extra>
+          <span class="timeline-date">2018</span>
+          <div class="timeline-content">
+            <h3>Graduated from Queen's University</h3>
+            <p>BSc Psychology, with the hopes of working in sport psychology.</p>
+          </div>
+        </div>
+      </div>
+      <button class="timeline-toggle" id="timelineToggle">See more</button>
+      <p class="journey-footer">More on <a href="https://linkedin.com/in/keatonrproud" target="_blank" rel="noopener">LinkedIn</a></p>
+    </section>
 
-							      <div id='extra_details'>Moved from working on company-wide tooling to a Product team. I'm focused on growing MileIQ and improving everything data-related.</div>
-							    </li>
+    <section id="research" class="wrap">
+      <p class="section-title">Publications</p>
+      <div class="publication">
+        <p class="publication-title">Separate motor memories are formed when controlling different implicitly specified locations on a tool.</p>
+        <p class="publication-meta">Proud, K., Heald, J.B., Ingram, J.N., Gallivan, J.P., Wolpert, D.M. &amp; Flanagan, J.R. &mdash; Journal of Neurophysiology, 121: 1342&ndash;1351.</p>
+        <div class="publication-links">
+          <a href="https://journals.physiology.org/doi/full/10.1152/jn.00526.2018" target="_blank" rel="noopener">View article</a>
+          <a href="https://journals.physiology.org/doi/pdf/10.1152/jn.00526.2018?download=true" target="_blank" rel="noopener">Download PDF</a>
+        </div>
+      </div>
+    </section>
+  </main>
 
-								<li class="event" data-date="2025">
+  <footer class="wrap">
+    <nav class="hero-links">
+      <a href="https://github.com/keatonrproud" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+      <span class="sep">&middot;</span>
+      <a href="https://linkedin.com/in/keatonrproud" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+      <span class="sep">&middot;</span>
+      <a href="mailto:keaton.r.proud@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
+    </nav>
+  </footer>
 
-							      <div id='event_title'><h3 style='font-weight:400; margin-bottom: 2px'>Hosting and Managing Virtual Machines</h3></div>
+  <script>
+    (function() {
+      var sections = document.querySelectorAll('section');
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) entry.target.classList.add('reveal');
+        });
+      }, { rootMargin: '0px 0px -60px 0px', threshold: 0 });
+      sections.forEach(function(s) { observer.observe(s); });
 
-							      <div id='extra_details'>Started to manage my own remote server that hosts personal and public web apps.</div>
-							    </li>
+      var hint = document.getElementById('scrollHint');
+      var miniHeader = document.getElementById('miniHeader');
+      var heroHeight = document.querySelector('.hero').offsetHeight;
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 80 && hint) {
+          hint.style.opacity = '0';
+          hint.style.transition = 'opacity .4s';
+        }
+        miniHeader.classList.toggle('visible', window.scrollY > heroHeight - 60);
+      }, { passive: true });
 
-								<li class="event" data-date="2024">
+      var toggle = document.getElementById('timelineToggle');
+      var extras = document.querySelectorAll('[data-extra]');
+      var expanded = false;
+      toggle.addEventListener('click', function() {
+        expanded = !expanded;
+        extras.forEach(function(el) {
+          el.classList.toggle('timeline-visible', expanded);
+        });
+        toggle.textContent = expanded ? 'See less' : 'See more';
+      });
 
-							      <div id='event_title'><h3 style='font-weight:400; margin-bottom: 2px'><a href="https://www.bendingspoons.com" target="_blank">Bending Spoons</a>: Maintaining Data + ETLs</h3></div>
-
-							      <div id='extra_details'>Using Python, BigQuery, and SQL to support in managing our flow of app monetization data from payment providers to our internal users.</div>
-							    </li>
-
-							    <li class="event" data-date="2023">
-
-							      <div id='event_title'><h3 style='font-weight:400; margin-bottom: 2px'>Building <a href='https://tigsvolley.com' target='_blank'>TIGS</a>, a Volleyball Desktop App</h3></div>
-
-							      <div id='extra_details'>Taking experiences from years prior, I started building a cross-platform application in Python to bring modern volleyball analytics to teams with less funding.</div>
-							    </li>
-
-							    <li class="event" data-date="2022">
-
-							      <div id='event_title'><h3 style='font-weight:400; margin-bottom: 2px'>Starting my <a href='https://corsi.unibo.it/2cycle/StatisticalSciences/course-structure-diagram/piano/2022/9222/A91/000/2022' target='_blank'>Master's in Statistics</a> in Bologna</h3></div>
-
-							      <div id='extra_details'>Despite having an unrelated Bachelor's, I was able to build a portfolio to earn a position in a Master's degree in Statistics + Data Science.</div>
-							    </li>
-
-							    <li class="event" data-date="2021">
-
-							      <div id='event_title'><h3 style='font-weight:400; margin-bottom: 2px'>Further Developing Programming Skills</h3></div>
-
-							      <div id='extra_details'>Used downtime through COVID to dive deeper into programming and integrate it with upcoming and existing projects. Developed personal and professional tools via Python, R, Shiny, Tableau, and others.</div>
-							    </li>
-
-							    <li class="event" data-date="2020">
-
-							      <div id='event_title'><h3 style='font-weight:400; margin-bottom: 2px'>Fine-Tuning Our Data-Driven Processes</h3></div>
-
-							      <div id='extra_details'>After building effective methods for quantifying decisions, I presented <a rel='prefetch' href="https://onedrive.live.com/redir?resid=D4BA416D68943AB6!41305&authkey=!AEevt0aaNUYXxqo&ithint=file%2cpptx&e=gV82Rz" target='_blank'>our principles and methods</a> with the rest of the Queen's Athletics High-Performance dept.</div>
-							    </li>
-
-							    <li class="event" id="date" data-date="2019">
-							      <div id='event_title'><h3 style='font-weight:400; margin-bottom: 2px'>Using Python and R with Coaching</h3></div>
-							      <div id='extra_details'>Started to realize the potential of developing proper data pipelines, but my knowledge was still limited. Responsible for collecting, analysing, and presenting findings within our team.</div>
-							    </li>
-
-								<li class="event" data-date="2018">
-							      <div id='event_title'><h3 style='font-weight:400; margin-bottom: 2px'>Coaching with Queen's Volleyball</h3></div>
-							      <div id='extra_details'>Took on a large role with the Queen's Men's team, where I built upon my love for coaching and found a passion for data. I worked with the team until 2022.</div>    
-							    </li>
-
-							    <li class="event" data-date="2018">
-							      <div id='event_title'><h3 style='font-weight:400; margin-bottom: 2px'>Graduated from Queen's University</h3></div>
-							      <div id='extra_details'>Finished my Bachelor of Science in Psychology with the intent of working in sport psychology.
-							      </div>
-							    </li>
-
-							  </ul>
-							</div>
-							</section>
-
-						<!-- Presentations -->
-							<section id="presentations" class="main special">
-								<header class="major">
-									<h2>Recent Presentations</h2>
-								</header>
-								<header class="major">
-									<h3><a rel='prefetch' href="https://docs.google.com/presentation/d/1pnXXRAIC307Y4sIC6K9-YqqVe7gHSz90E1XxSwthSXE/edit?usp=sharing" target='_blank'>Analytics Engineering in a Modern Data Team</a>&nbsp; <i class='fa fa-laptop fa-fw' style='color:#ffa600'></i></h3>
-								</header>
-								<header class="major">
-									<h3><a rel='prefetch' href="https://onedrive.live.com/redir?resid=D4BA416D68943AB6!41305&authkey=!AEevt0aaNUYXxqo&ithint=file%2cpptx&e=gV82Rz" target='_blank'>Data-Informed Decision Making in Sport</a>&nbsp; <i class='fa fa-database fa-fw' style='color:#1a9ce5'></i></h3>
-								</header>
-								<header class="major">
-									<h3><a rel='prefetch' href="https://onedrive.live.com/redir?resid=D4BA416D68943AB6!56785&authkey=!AGPh9arzn4oqBhE&ithint=file%2cpptx&e=BZveOL" target='_blank'>Points Win Volleyball Games</a>&nbsp; <i class='fa fa-trophy fa-fw' style='color:#FFD700'></i></h3>
-								</header>
-								<header class="major">
-									<h3><a rel='prefetch' href="https://onedrive.live.com/edit.aspx?resid=D4BA416D68943AB6!8690&ithint=file%2cpptx&wdo=2&authkey=!AC_HVIdLUC-8BOM" target='_blank'>Stress, Arousal, and Anxiety Management</a>&nbsp; <i class='fa fa-bullseye fa-fw' style='color:red'></i></h3>
-								</header>
-							</section>
-
-						<!-- Research -->
-							<section id="research" class="main special">
-								<header class="major">
-									<h2>Publications and Proposals</h2>
-									<h3 style='font-weight: 400;'>Separate motor
-memories are formed when controlling different implicitly specified locations on a tool.</h3>
-<h4><i>
-Proud, K., Heald, J.B., Ingram, J.N., Gallivan, J.P., Wolpert, D.M. & Flanagan, J.R..
-<br>Journal of Neurophysiology, 121: 1342-1351.</h4></i>
-
-<ul class="actions special">
-	<li><a href="https://journals.physiology.org/doi/full/10.1152/jn.00526.2018" class="button primary" target='_blank'>View Article</a></li>
-	<li><a href="https://journals.physiology.org/doi/pdf/10.1152/jn.00526.2018?download=true" class="button">Download</a></li>	
-									</ul>
-								</header>
-							</section>
-
-						<!-- Writing -->
-							<section id="writing" class="main special">
-								<header class="major">
-									<h2>Writing</h2>
-									<!-- TODO: add a view all section to see every article..? -->
-									<h4>	
-										<div>
-											<a rel='prefetch' href="./image_class_eval_article"><h3 style='padding-bottom:0px'>Image Classification: Machines vs Humans</a></h3>
-										</div>
-										<div>
-											<h5>Article Summary | Machine Learning</h5>
-										</div>
-										<div>
-											<a rel='prefetch' href="./improving_human_tracking"><h3 style='padding-bottom:0px'>Improving Human Tracking via 3D Reconstructions</a></h3>
-										</div>
-										<div>
-											<h5>Article Summary | Computer Vision</h5>
-										</div>
-								</header>
-							</section>
-
-
-
-					</div>
-
-				<!-- Footer -->
-					<footer id="footer">
-						<section>	
-							<dl class='alt'>
-							<ul class="icons">
-								<li><a rel='prefetch' href="https://github.com/keatonrproud" class="icon brands fa-github alt" target='_blank'><span class="label">GitHub</span></a></li>
-								<li><a rel='prefetch' href="https://linkedin.com/in/keatonrproud" class="icon brands fa-linkedin-in alt" target='_blank'><span class="label">LinkedIn</span></a></li>
-								<li><a rel='prefetch' href="https://twitter.com/keatonrproud" class="icon brands fa-twitter alt" target='_blank'><span class="label">Twitter</span></a></li>
-							</ul>
-								<p><i class='fa fa-envelope fa-fw'>&nbsp; </i><a href="mailto: keaton.r.proud@gmail.com">keaton.r.proud@gmail.com</a></p>
-<p><i class='fa fa-phone fa-fw'>&nbsp;</i>+39 (348) 274-6953</p>								
-	</dl>
-						</section>
-						<p class='copyright'>Design inspired by <a href="https://aj.lkn.io">@ajlkn</a></p>
-					</footer>
-
-			</div>
-
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
-	</body>
+      var grid = document.getElementById('dotGrid');
+      var ticking = false;
+      document.addEventListener('mousemove', function(e) {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function() {
+          var x = (e.clientX / window.innerWidth - 0.5) * 6;
+          var y = (e.clientY / window.innerHeight - 0.5) * 6;
+          grid.style.backgroundPosition = x + 'px ' + y + 'px';
+          ticking = false;
+        });
+      });
+    })();
+  </script>
+</body>
 </html>
